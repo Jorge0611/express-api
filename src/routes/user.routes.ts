@@ -35,6 +35,7 @@ router.post('/authenticate', async (req: Request, res: Response) => {
 			return res.status(403).json({ message: 'Wrong email or password.' });
 		}
 		
+		// verify if the password is correct
 		const passwordValid: Boolean = await verifyPassword(password, user.password);
 
 		if (passwordValid) {
@@ -163,8 +164,8 @@ router.use(attachUser);
 const requireAuth = jwt({
 	secret: process.env.JWT_SECRET as string,
 	algorithms: ['HS256'],
-	audience: 'api.orbit',
-	issuer: 'api.orbit',
+	audience: 'api.windpress',
+	issuer: 'api.windpress',
 });
 
 router.get('/dashboard', [requireAuth, requireAdmin, requireSenior], (req: Request, res: Response ) => {
